@@ -1,0 +1,12 @@
+<launch>
+  <node pkg="wall_following_assignment" type="wall_follower_real.py" output="screen" name="wall_follower">
+         <param name="forward_speed" value="0.7" />
+         <param name="desired_distance_from_wall" value="0.8" />
+   </node>
+   <node pkg="laser_filters" type="scan_to_scan_filter_chain"  name="laser_filter">
+	 <rosparam command="load" file="$(find wall_following_assignment)/my_laser_config.yaml" />
+	 <remap from="scan" to="scan" />
+   </node>
+	
+
+</launch>
