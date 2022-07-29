@@ -52,7 +52,7 @@ class WallFollowerHusky:
         self.hz = 50
 
         # using geometry_msgs.Twist messages
-        self.cmd_pub = rospy.Publisher('/ackermann_cmd', AckermannDriveStamped, queue_size=10)
+        self.cmd_pub = rospy.Publisher('/ackermann_cmd', AckermannDriveStamped, queue_size=1)
 
         # this will set up a callback function that gets executed
         # upon each spinOnce() call, as long as a laser scan
@@ -60,7 +60,7 @@ class WallFollowerHusky:
         self.laser_sub = rospy.Subscriber("/scan_filtered", LaserScan, self.laser_scan_callback)
         self.cte_pub = rospy.Publisher('/cte', Float32, queue_size=1)
 
-        self.pid_controller = PID(0.06, 0.61, 0., 1. / self.hz)
+        self.pid_controller = PID(0.09, 0.02, 0.008, 1. / self.hz)
         self.reconfigure_server = Server(WallFollowerConfig, self.configure_callback)
 
     def laser_scan_callback(self, msg):

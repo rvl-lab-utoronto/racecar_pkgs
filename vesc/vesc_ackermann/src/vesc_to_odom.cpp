@@ -7,6 +7,8 @@
 #include <nav_msgs/Odometry.h>
 #include <geometry_msgs/TransformStamped.h>
 
+// #include <iostream>
+
 namespace vesc_ackermann
 {
 
@@ -80,13 +82,21 @@ void VescToOdom::vescStateCallback(const vesc_msgs::VescStateStamped::ConstPtr& 
     return;
 
   // convert to engineering units
-  speed_ = ( state->state.speed - speed_to_erpm_offset_ ) / speed_to_erpm_gain_;
+  // std::cout<<"speed command: "<<state->state.speed<<"\n";
+
+  if(abs(state->state.speed) < 200){
+    speed_ = 0.0;
+  }
+  else{
+    speed_ = ( state->state.speed - speed_to_erpm_offset_ ) / speed_to_erpm_gain_;
+  }
+  
   if (use_servo_cmd_) {
     steering_angle_ =
       ( last_servo_cmd_->data - steering_to_servo_offset_ ) / steering_to_servo_gain_;
     angular_velocity_ = speed_ * tan(steering_angle_) / wheelbase_;
   }
-
+  // std::cout<<"speed: "<<speed_<<"\n";
   // use current state as last state if this is our first time here
   if (!last_state_)
     last_state_ = state;
@@ -97,6 +107,8 @@ void VescToOdom::vescStateCallback(const vesc_msgs::VescStateStamped::ConstPtr& 
   /** @todo could probably do better propigating odometry, e.g. trapezoidal integration */
 
   // propigate odometry
+  // if abs(speed_)
+
   double x_dot = speed_ * cos(yaw_);
   double y_dot = speed_ * sin(yaw_);
   x_ += x_dot * dt.toSec();
@@ -136,12 +148,20 @@ void VescToOdom::publishOdometry()
   /** @todo Think about position uncertainty, perhaps get from parameters? */
   odom->pose.covariance[0]  = 0.2; ///< x
   odom->pose.covariance[7]  = 0.2; ///< y
-  odom->pose.covariance[35] = 0.4; ///< yaw
+  odom->pose.covariance[14]  = 0.0005; ///< z
+
+  odom->pose.covariance[21] = 0.004; ///< roll
+  odom->pose.covariance[28] = 0.004; ///< pitch
+  odom->pose.covariance[35] = 0.2; ///< yaw
 
   // Velocity ("in the coordinate frame given by the child_frame_id")
   odom->twist.twist.linear.x = speed_;
   odom->twist.twist.linear.y = 0.0;
   odom->twist.twist.angular.z = angular_velocity_;
+
+  odom->twist.covariance[0] = 0.2;
+  odom->twist.covariance[7] = 0.2;
+  odom->twist.covariance[35] = 0.5;
 
   // Velocity uncertainty
   /** @todo Think about velocity uncertainty */

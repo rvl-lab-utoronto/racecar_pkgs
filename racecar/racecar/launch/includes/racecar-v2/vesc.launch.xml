@@ -16,9 +16,13 @@
     <node pkg="vesc_driver" type="vesc_driver_node" name="vesc_driver" />
 
     <!-- calculate odometry from VESC sensors -->
-    <node pkg="vesc_ackermann" type="vesc_to_odom_node" name="vesc_to_odom">
+    <node pkg="vesc_ackermann" type="vesc_to_odom_node" name="vesc_to_odom" output="screen">
       <remap from="wheelbase" to="/vehicle_geometry/wheelbase" />
       <remap from="odom" to="/odom" />
+      <rosparam>
+odom_frame: odom
+base_frame: base_link
+      </rosparam>
     </node>
   </group>
 
