@@ -12,3 +12,9 @@ Build the packages
 ```
 catkin_make_isolated 
 ```
+
+
+run teleop 
+```
+./launch_teleop.sh
+```
