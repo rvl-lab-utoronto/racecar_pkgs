@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt-get install ros-melodic-joy ros-melodic-robot-pose-ekf ros-melodic-joy-teleop ros-melodic-robot-localization ros-melodic-urg-node ros-melodic-librealsense2 ros-melodic-realsense2-camera ros-melodic-realsense2-description ros-melodic-ackermann-msgs ros-melodic-serial
+sudo apt-get install -y ros-noetic-joy ros-noetic-robot-pose-ekf ros-noetic-joy-teleop ros-noetic-robot-localization ros-noetic-urg-node ros-noetic-librealsense2 ros-noetic-realsense2-camera ros-noetic-realsense2-description ros-noetic-ackermann-msgs ros-noetic-serial
 
 
 
