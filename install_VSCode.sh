@@ -1,5 +1,5 @@
 #!/bin/bash
-# vscode
+# reference: https://forums.developer.nvidia.com/t/vs-code-can-t-launch-with-jetpack-5-0/213980/14
 cd
 mkdir git 
 cd git 
