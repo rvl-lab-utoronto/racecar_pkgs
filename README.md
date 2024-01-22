@@ -27,5 +27,5 @@ catkin_make_isolated
 
 run teleop 
 ```
-./launch_teleop.sh
+./scripts/launch_teleop.sh
 ```
