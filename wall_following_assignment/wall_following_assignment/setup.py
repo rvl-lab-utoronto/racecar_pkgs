@@ -8,7 +8,7 @@ d = generate_distutils_setup(
     # scripts=['bin/myscript'], 
     packages=['wall_following_assignment'],
     package_dir={'': 'python'},
-    scripts=['python/wall_follower.py']
+    scripts=['python/wall_follower.py','python/wall_follower_real.py' ]
 )
 
 setup(**d)
