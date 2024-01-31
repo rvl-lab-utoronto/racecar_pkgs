@@ -49,7 +49,7 @@ class WallFollowerRaceCar:
         # using ackermann_msgs.AckermannDriveStamped messages
         # self.cmd_pub = ?
 
-        # todo: set up the laser scan subscriber
+        # todo: set up the laser scan subscriber to subscribe to topic '/scan_filtered' this already as only the left side of the LIDAR sweep. 
         # this will set up a callback function that gets executed
         # upon each spinOnce() call, as long as a laser scan
         # message has been published in the meantime by another node
